@@ -607,10 +607,187 @@ ScreenNumber = 0;
 [windowPtr, rect] = Screen('OpenWindow',ScreenNumber,255);
 
 
+% 1. Use imread() to read the image into a matrix of numbers
+happyface = imread('happyface.jpg');
+
+% 2. Use MakeTexture to create an OpenGL texture using that matrix
+happyface_texture = Screen('MakeTexture',windowPtr,happyface); 
+
+% 3. Use DrawTexture to draw the texture to the screen
+Screen('DrawTexture',windowPtr,happyface_texture)
+Screen('Flip',windowPtr)
+
+KbWait()
+sca 
 
 
+%% Moving images
+clc;
+
+PsychDebugWindowConfiguration % add transparncy while in PTB
+
+Screen('Preference', 'SkipSyncTests', 1) 
+ScreenNumber = 0; 
+[windowPtr, rect] = Screen('OpenWindow',ScreenNumber,255);
 
 
+% 1. Use imread() to read the image into a matrix of numbers
+happyface = imread('happyface.jpg');
+
+% 2. Use MakeTexture to create an OpenGL texture using that matrix
+happyface_texture = Screen('MakeTexture',windowPtr,happyface); 
+
+% image position
+[image_width, image_height, n_chan] = size(happyface);
+imagepos = [0 0 image_width image_height];
+
+% 3. Use DrawTexture to draw the texture to the screen
+Screen('DrawTexture',windowPtr,happyface_texture,[],imagepos)
+Screen('Flip',windowPtr)
+
+KbWait()
+%%%%%%%%%%%%%%% move image
+% image position
+x_offset = 700; y_offset = 500;
+imagepos = [x_offset y_offset x_offset+image_width y_offset+image_height];
+
+% 3. Use DrawTexture to draw the texture to the screen
+Screen('DrawTexture',windowPtr,happyface_texture,[],imagepos)
+Screen('Flip',windowPtr)
+
+KbWait()
+sca
+
+%% CenterRect - centerize an item(itemPos, screenRect)
+
+%% Scaling Images
+clc;
+
+PsychDebugWindowConfiguration % add transparncy while in PTB
+
+Screen('Preference', 'SkipSyncTests', 1) 
+ScreenNumber = 0; 
+[windowPtr, rect] = Screen('OpenWindow',ScreenNumber,255);
 
 
+% 1. Use imread() to read the image into a matrix of numbers
+happyface = imread('happyface.jpg');
 
+% 2. Use MakeTexture to create an OpenGL texture using that matrix
+happyface_texture = Screen('MakeTexture',windowPtr,happyface); 
+
+% image position
+[image_width, image_height, n_chan] = size(happyface);
+imagepos = [0 0 image_width image_height];
+
+destination = CenterRect(imagepos,rect);
+
+% 3. Use DrawTexture to draw the texture to the screen
+Screen('DrawTexture',windowPtr,happyface_texture,[],destination)
+Screen('Flip',windowPtr)
+
+KbWait()
+% rescale image to its half
+imagepos = imagepos./2;
+destination = CenterRect(imagepos,rect);
+% 3. Use DrawTexture to draw the texture to the screen
+Screen('DrawTexture',windowPtr,happyface_texture,[],destination)
+Screen('Flip',windowPtr)
+
+WaitSecs(1) 
+KbWait()
+sca
+
+%% Rotating Images
+clc;
+
+PsychDebugWindowConfiguration % add transparncy while in PTB
+
+Screen('Preference', 'SkipSyncTests', 1) 
+ScreenNumber = 0; 
+[windowPtr, rect] = Screen('OpenWindow',ScreenNumber,255);
+
+
+% 1. Use imread() to read the image into a matrix of numbers
+happyface = imread('happyface.jpg');
+
+% 2. Use MakeTexture to create an OpenGL texture using that matrix
+happyface_texture = Screen('MakeTexture',windowPtr,happyface); 
+
+% image position
+[image_width, image_height, n_chan] = size(happyface);
+imagepos = [0 0 image_width image_height];
+
+destination = CenterRect(imagepos,rect);
+
+% 3. Use DrawTexture to draw the texture to the screen
+Screen('DrawTexture',windowPtr,happyface_texture,[],destination)
+Screen('Flip',windowPtr)
+
+KbWait()
+% rotate image
+angle = 0;
+now = GetSecs();
+duration = 30; % in secs
+
+while GetSecs <= now + duration
+    Screen('DrawTexture',windowPtr,happyface_texture,[],destination,angle)
+    Screen('Flip',windowPtr)
+    angle = angle+1;
+end
+
+KbWait()
+sca; 
+
+%% multiple images
+clc;
+
+PsychDebugWindowConfiguration % add transparncy while in PTB
+
+Screen('Preference', 'SkipSyncTests', 1) 
+ScreenNumber = 0; 
+[windowPtr, rect] = Screen('OpenWindow',ScreenNumber,255);
+
+% find center of scren
+X_center = rect(3)/2;
+Y_center = rect(4)/2;
+
+
+% 1. Use imread() to read the image into a matrix of numbers
+happyface = imread('happyface.jpg');
+angryface = imread('angryface.jpg');
+
+% 2. Use MakeTexture to create an OpenGL texture using that matrix
+happyface_texture = Screen('MakeTexture',windowPtr,happyface); 
+angryface_texture = Screen('MakeTexture',windowPtr,angryface); 
+
+% image position
+[image_width, image_height, n_chan] = size(happyface);
+destination_1 = [X_center Y_center X_center+image_width Y_center+image_height];
+
+[image_width, image_height, n_chan] = size(angryface);
+destination_2 = [X_center-image_width Y_center-image_height X_center Y_center];
+
+
+% 3. Use DrawTexture to draw the texture to the screen
+Screen('DrawTexture',windowPtr,happyface_texture,[],destination_1)
+Screen('DrawTexture',windowPtr,angryface_texture,[],destination_2 )
+Screen('Flip',windowPtr)
+
+KbWait()
+sca
+
+%% transparency for images
+
+% Screen('DrawTexture', windowPointer, texturePointer [,sourceRect] 
+% [,destinationRect] [,rotationAngle] [, filterMode] [, globalAlpha] 
+% [, modulateColor] [, textureShader] [, specialFlags] [, auxParameters])
+
+% [, globalAlpha] by setting
+
+%% displaying images
+% ■ Loading images in and making textures can take time
+% ■ Don't wait until you want to present the images to load them in
+% ■ Make your textures at the beginning of your script, then present them on time
+
+%% 
