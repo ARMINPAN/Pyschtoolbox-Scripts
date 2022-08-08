@@ -790,4 +790,50 @@ sca
 % ■ Don't wait until you want to present the images to load them in
 % ■ Make your textures at the beginning of your script, then present them on time
 
-%% 
+%% state diagram
+% before implementing the task, always plot the state diagram completely in
+% order to not forgetting any condition
+
+%% Randomization - we need high randomization for each subject task
+clc;
+
+rng
+
+rng default % seed 0 - always gives the same values
+randi(100,[1 10])
+
+% so we always use rng('shuffle') at the top of the code
+rng('shuffle')
+randi(100,[1 10])
+
+%% Permuation - using Matlab randperm() or PTB Shuffle 
+% PTB shuffle works with columns
+
+
+%% Priority - matlab has normal priority by default
+
+% Run as administrator in windows
+% Close other apps when using PTB
+% Use Priority() to set the priority level - the higher, the less other
+% process interfers with our code
+
+% ■ OSX: Priority levels range from 0-9 and relate to the percentage of CPU time 
+% guaranteed to the PTB thread 
+% – However, if you use too much CPU, the OS may kick you back down to level 0
+% – If you frequently call WaitSecs or Flip, you are unlikely to be demoted
+
+
+% ■ On Windows there are 3 levels available: 
+% – 0 : normal priority level
+% – 1: high priority level
+% – 2: real time priority level
+% ■ Using level 2 may cause problems (for example, it may disable keyboard input). 
+% Probably only want to use this when absolutely necessary, for example when 
+% running an intense animation where timing really matters.
+
+
+% MaxPriority(windowOrScreenNum) tells us the max priority that we can have
+% not usable on windows since priority value greater than 1 is not
+% recommended
+
+
