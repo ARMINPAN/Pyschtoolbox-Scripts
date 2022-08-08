@@ -494,4 +494,40 @@ Screen('Flip',windowPtr);
 KbWait()
 sca
 
+%% animations can be implemented using loops - color animation
+clc;
+
+PsychDebugWindowConfiguration % add transparncy while in PTB
+
+Screen('Preference', 'SkipSyncTests', 1) 
+ScreenNumber = 0; 
+[windowPtr, rect] = Screen('OpenWindow',ScreenNumber,255);
+
+% find center of scren
+X_center = rect(3)/2;
+Y_center = rect(4)/2;
+
+startTime = GetSecs();
+
+color = [0 0 0];
+selected_col = 1;
+adding_color = [0 0 0];
+adding_color(selected_col) = 1;
+
+% animation goes on until 30s
+while GetSecs() < startTime + 30
+    color = color + adding_color;
+    xy = [X_center-100 Y_center-100 X_center+100 Y_center+100];
+    Screen('FillRect',windowPtr,color,xy)
+    Screen('Flip',windowPtr)
+    if(color(selected_col) >= 256)
+        color(selected_col) = 0;
+        adding_color = [0 0 0];
+        selected_col = randperm(3,1);
+        adding_color(selected_col) = 1;
+    end
+end
+
+sca;
+
 %% 
