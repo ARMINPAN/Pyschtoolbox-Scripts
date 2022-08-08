@@ -530,4 +530,87 @@ end
 
 sca;
 
-%% 
+%% Drawing text - DrawText
+clc;
+
+PsychDebugWindowConfiguration % add transparncy while in PTB
+
+Screen('Preference', 'SkipSyncTests', 1) 
+ScreenNumber = 0; 
+[windowPtr, rect] = Screen('OpenWindow',ScreenNumber,255);
+
+% 1. set up all the properties of the text we want to draw(font, size, style)
+text_size = 48;
+Screen('TextSize',windowPtr,text_size)
+
+text_font = 'Arial';
+Screen('TextFont',windowPtr,text_font)
+
+text_style = 1; % 0:normal - 1:bold - 2:italic - 4:underline - 8:outline - 32:condence - 64:extend
+Screen('TextStyle',windowPtr,text_style)
+
+% 2. draw the text using DrawText
+text = 'Hello Subject!';
+x = 800;
+y = 540;
+color = [0 150 250];
+Screen('DrawText',windowPtr,text,x,y,color);
+
+% show on screen
+Screen('Flip',windowPtr);
+
+% size of our text in screen
+rect = Screen('TextBounds',windowPtr,text)
+
+KbWait()
+sca
+
+%% Drawing Formatex text - DrawFormattedText
+clc;
+
+PsychDebugWindowConfiguration % add transparncy while in PTB
+
+Screen('Preference', 'SkipSyncTests', 1) 
+ScreenNumber = 0; 
+[windowPtr, rect] = Screen('OpenWindow',ScreenNumber,255);
+
+% 1. set up all the properties of the text we want to draw(font, size, style)
+text_size = 48;
+Screen('TextSize',windowPtr,text_size)
+
+text_font = 'Arial';
+Screen('TextFont',windowPtr,text_font)
+
+text_style = 1; % 0:normal - 1:bold - 2:italic - 4:underline - 8:outline - 32:condence - 64:extend
+Screen('TextStyle',windowPtr,text_style)
+
+
+% 2. draw the text using DrawFormattedText
+text = 'Hello Subject!\n Get ready for the experiment...';
+color = [100 150 250];
+DrawFormattedText(windowPtr,text,'center','center',color);
+
+% show on screen
+Screen('Flip',windowPtr);
+
+
+KbWait()
+sca
+
+%% Displaying pictures - 
+clc;
+
+PsychDebugWindowConfiguration % add transparncy while in PTB
+
+Screen('Preference', 'SkipSyncTests', 1) 
+ScreenNumber = 0; 
+[windowPtr, rect] = Screen('OpenWindow',ScreenNumber,255);
+
+
+
+
+
+
+
+
+
